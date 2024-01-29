@@ -12,5 +12,5 @@ typedef struct http_request{
 }http_request;
 
 http_request* parse_http_request(char* client_message);
-char* handle_GET_request(http_request* client_request);
+int handle_GET_request(http_request* client_request, char** full_http_message);
 #endif // !

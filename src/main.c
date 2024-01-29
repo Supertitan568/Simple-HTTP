@@ -49,22 +49,22 @@ void handle_new_client(){
   set_up_socket(&server_fd, &new_socket, &address);
   request_size = read(new_socket, buffer, 2048 - 1);
   printf("http request size:%li\n", request_size);
-  printf("%s", buffer);
 
   http_request* client_request = parse_http_request(buffer);
 
   char* full_http_request = NULL;
+  int message_size;
   switch(client_request->type){
     case 'G':
-      full_http_request = handle_GET_request(client_request);
+      message_size = handle_GET_request(client_request, &full_http_request);
       break;
 
     default:
-      full_http_request = "HTTP/1.1 501 Not Implemented\r\n";   
+      full_http_request = "HTTP/1.1 501 Not Implemented\r\n\r\n";   
   } 
   
-  send(new_socket, full_http_request, strlen(full_http_request), 0);
-  printf("html file sent\n");
+  send(new_socket, full_http_request, message_size, 0);
+  printf("%s", full_http_request);
  
   close(new_socket);
   close(server_fd);
