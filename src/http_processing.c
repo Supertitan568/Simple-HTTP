@@ -78,6 +78,9 @@ static const char* get_mime_type(const char* file_path){
   if(strcmp(file_extension, "html") == 0){
     return "text/html";
   }
+  else if(strcmp(file_extension, "js") == 0){
+    return "text/js";
+  }
   else if(strcmp(file_extension, "txt") == 0){
     return "text/plain";
   }
@@ -94,7 +97,13 @@ static const char* get_mime_type(const char* file_path){
 
 int handle_GET_request(http_request* client_request, char** full_http_message){
   int message_length = 0;
-  if(access(client_request->html_page_path + 1, F_OK) == 0 && strcmp(client_request->html_page_path, "/")!= 0){
+  if(strcmp(client_request->html_page_path, "/") == 0){
+    char* default_page = "/index.html";
+    free(client_request->html_page_path);
+    client_request->html_page_path = (char*) malloc(strlen(default_page) + 1);
+    strcpy(client_request->html_page_path, default_page);
+  }
+  if(access(client_request->html_page_path + 1, F_OK) == 0){
     char http_header[70];
     snprintf(http_header, 70, "HTTP/1.1 200 OK\r\nContent-Type:%s\r\n\r\n", get_mime_type(client_request->html_page_path));
     char* html_document = NULL;
