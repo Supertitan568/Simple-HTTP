@@ -9,11 +9,11 @@ By default this sends index.html
 This is not meant to be used for production
 
 ## Commands to get this program started:
-'''shell
+```shell
 make
 cd bin
 sudo ./simple_http_server
-'''
+```
 
 ## Planned Future Updates:
 
