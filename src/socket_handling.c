@@ -2,7 +2,7 @@
 
 #define _OPEN_SYS
 #define _OPEN_THREADS
-#define PORT 80
+#define PORT 8080
 
 static void set_up_socket(int* server_fd, struct sockaddr_in* address){
    int opt = 1;

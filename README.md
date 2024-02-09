@@ -11,15 +11,14 @@ This is not meant to be used for production
 ## Commands to get this program started:
 ```shell
 make
+sudo iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080
 cd bin
-sudo ./simple_http_server
+./simple_http_server
 ```
 
 ## Planned Future Updates:
 
 Going through and changing out less secure functions for more secure ones
-
-Letting this program bind to another port besides port 80 so it is not run as root
 
 Adding more MIME types
 
