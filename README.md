@@ -2,7 +2,7 @@
 
 This is a simple http webserver for linux written in C.
 
-This binds to port 80 and sends any files within the bin directory
+This binds to port 8080 and sends any files within the /var/website directory
 
 By default this sends index.html
 
@@ -20,8 +20,6 @@ sudo systemctl start simple_http_server
 Going through and changing out less secure functions for more secure ones
 
 Adding more MIME types
-
-Daemonizing this program to let it run in the background
 
 Creating more Http headers
 
