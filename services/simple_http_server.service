@@ -1,0 +1,12 @@
+[Unit]
+Description=simple-http
+After=network.target
+
+[Service]
+User=http-server
+ExecStart=/usr/local/bin/simple_http_server
+type=simple
+Restart=always
+
+[Install]
+WantedBy=default.target
