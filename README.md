@@ -11,6 +11,7 @@ This is not meant to be used for production
 ## Commands to get this program started:
 ```shell
 make
+sudo make install
 sudo iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080
 sudo systemctl start simple_http_server
 ```
