@@ -97,17 +97,29 @@ static const char* get_mime_type(const char* file_path){
 
 int handle_GET_request(http_request* client_request, char** full_http_message){
   int message_length = 0;
+
+  //Checking to see if client is requesting default page
   if(strcmp(client_request->html_page_path, "/") == 0){
     char* default_page = "/index.html";
     free(client_request->html_page_path);
     client_request->html_page_path = (char*) malloc(strlen(default_page) + 1);
     strcpy(client_request->html_page_path, default_page);
   }
-  if(access(client_request->html_page_path + 1, F_OK) == 0){
+  
+  //Adding the path to the website directory
+  const char* website_directory = "/var/website";
+  char* tmp_path = (char*) malloc(strlen(client_request->html_page_path) + strlen(website_directory) + 1);
+  strcpy(tmp_path, website_directory);
+  strcat(tmp_path, client_request->html_page_path);
+  free(client_request->html_page_path);
+  client_request->html_page_path = tmp_path;
+  
+  //Building the http response
+  if(access(client_request->html_page_path, F_OK) == 0){
     char http_header[70];
     snprintf(http_header, 70, "HTTP/1.1 200 OK\r\nContent-Type:%s\r\n\r\n", get_mime_type(client_request->html_page_path));
     char* html_document = NULL;
-    int file_length = load_html_document(client_request->html_page_path + 1, &html_document);
+    int file_length = load_html_document(client_request->html_page_path, &html_document);
     message_length = strlen(http_header) + file_length + 1; 
     *full_http_message = (char*) malloc(message_length);
     strcpy(*full_http_message, http_header);

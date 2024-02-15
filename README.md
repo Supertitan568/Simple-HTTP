@@ -12,8 +12,7 @@ This is not meant to be used for production
 ```shell
 make
 sudo iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080
-cd bin
-./simple_http_server
+sudo systemctl start simple_http_server
 ```
 
 ## Planned Future Updates:
